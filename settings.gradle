@@ -1,0 +1,2 @@
+rootProject.name = "Lesson8_Soc_set"
+include ':app'

@@ -23,11 +23,17 @@ public class SocialNetworkFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_social_network, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
+        //зададим для всех объектов элементов одинаковые размеры
+        recyclerView.setHasFixedSize(true);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());  // отвечает за размещение элементов в RecyclerViewБ будут вертикально вниз
         recyclerView.setLayoutManager(LayoutManager);
 
         String[] data = getResources().getStringArray(R.array.test_title);
         SocialNetworkAdapter socialNetworkAdapter = new SocialNetworkAdapter(data);
+
+        // прикрепим адаптер к списку
+        recyclerView.setAdapter(socialNetworkAdapter);
 
         return view;
     }

@@ -19,11 +19,16 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     // достаем элементы public MyViewHolder и далее задаются значения onBindViewHolder
 
 
+    private MyOnClickListener Listener;
 
-
+    public void setMyOnClickListener(MyOnClickListener Listener){
+        this.Listener = Listener;
+    }
 
     // задаем данные
     private String[] dadaSource;
+
+  //  private MyOnClickListener Listener;
 
     public SocialNetworkAdapter(String[] dadaSource) {
         this.dadaSource = dadaSource;
@@ -35,14 +40,26 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
 
 
 
+
+
     // создаются элементы мы создаем для него оболочку MyViewHolder
     // делаем доступ к его полям TextView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent,false);
 
-//        MyViewHolder holder = new MyViewHolder(view);
-//        holder.imageView
+//        // вешаем клики
+//        (view.findViewById(R.id.textView)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+////        MyViewHolder holder = new MyViewHolder(view);
+////        holder.imageView
+//
+
         return new MyViewHolder(view);
     }
 
@@ -81,6 +98,14 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
             itemView = itemView.findViewById(R.id.imageView);
+
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Listener.OnMyClick(v, getAdapterPosition()); // getAdapterPosition()) возвращает текущую позицию
+
+                }
+            });
 
         }
     }

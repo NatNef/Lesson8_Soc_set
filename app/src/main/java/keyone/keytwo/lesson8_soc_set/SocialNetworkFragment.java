@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,15 +12,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SocialNetworkFragment extends Fragment {
+import static android.widget.Toast.makeText;
 
-    public static SocialNetworkFragment newInstance()
-    {return new SocialNetworkFragment();
+// SocialNetworkFragment должен уметь обрабатывать поведение для MyOnClickListener
+public class SocialNetworkFragment extends Fragment implements MyOnClickListener {
+
+    public static SocialNetworkFragment newInstance() {
+        return new SocialNetworkFragment();
 
     }
 
     @Nullable
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_social_network, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
@@ -33,10 +37,24 @@ public class SocialNetworkFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         SocialNetworkAdapter socialNetworkAdapter = new SocialNetworkAdapter(data);
+        socialNetworkAdapter.setMyOnClickListener(this);
+// или создаем листенер
+//        socialNetworkAdapter.setMyOnClickListener(new MyOnClickListener() {
+//            @Override
+//            public void OnMyClick(View view, int position) {
+//                Toast.makeText (getContext(), "тяжелая обработка для" + position, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         // прикрепим адаптер к списку
         recyclerView.setAdapter(socialNetworkAdapter);
 
         return view;
+    }
+
+    @Override
+    public void OnMyClick(View view, int position) {
+        Toast.makeText(getContext(), "тяжелая обработка для" + position, Toast.LENGTH_SHORT).show();
+
     }
 }

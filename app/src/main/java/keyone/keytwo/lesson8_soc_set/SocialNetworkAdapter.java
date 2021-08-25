@@ -4,6 +4,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,17 +27,19 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     }
 
     // задаем данные
-    private String[] dadaSource;
+    private CardSourse dadaSource;
+
 
   //  private MyOnClickListener Listener;
 
-    public SocialNetworkAdapter(String[] dadaSource) {
+    public SocialNetworkAdapter(CardSourse dadaSource) {
         this.dadaSource = dadaSource;
     }
 //// можем на ходу передавать новые данные в String[] dadaSource
-//    public void setData(String[] dadaSource){
-//        this.dadaSource = dadaSource;
+   public void setData(CardSourse dadaSource) {
+       this.dadaSource = dadaSource;
 //    }
+   }
 
 
 
@@ -46,7 +49,7 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     // делаем доступ к его полям TextView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent,false);
+        View view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_view, parent,false);
 
 //        // вешаем клики
 //        (view.findViewById(R.id.textView)).setOnClickListener(new View.OnClickListener() {
@@ -68,7 +71,10 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     // прокрутился список и создается след элемент который уехал за экран
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.textView.setText(dadaSource[position]);
+          holder.title.setText(dadaSource.getCardData(position).getTitle());
+          holder.description.setText(dadaSource.getCardData(position).getDescription());
+          holder.imageView.setImageResource(dadaSource.getCardData(position).getPicture());
+          holder.Like.setChecked(dadaSource.getCardData(position).isLike());
 //        holder.imageView.setText(dadaSource[position]);
 
     }
@@ -76,14 +82,16 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     //вернуть размер. сколько прокручивается
     @Override
     public int getItemCount() {
-        return dadaSource.length;
+        return dadaSource.size();
     }
 
     // внутри адаптера класс, будет предатсавлением в
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // элементы
-        private TextView textView;
-        private ImageView imageView;
+        TextView title;
+        TextView description;
+        ImageView imageView;
+        CheckBox Like;
 
 //        public TextView getTextView() {
 //            return textView;
@@ -96,10 +104,12 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
  //приходят элементы и мы достаем
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textView);
-            itemView = itemView.findViewById(R.id.imageView);
+            description = itemView.findViewById(R.id.description);
+            title = itemView.findViewById(R.id.title);
+            imageView = itemView.findViewById(R.id.imageView);
+            Like = itemView.findViewById(R.id.Like);
 
-            textView.setOnClickListener(new View.OnClickListener() {
+            imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Listener.OnMyClick(v, getAdapterPosition()); // getAdapterPosition()) возвращает текущую позицию

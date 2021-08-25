@@ -31,7 +31,8 @@ public class SocialNetworkFragment extends Fragment implements MyOnClickListener
         recyclerView.setHasFixedSize(true);
 
         //получили данные
-        String[] data = getResources().getStringArray(R.array.test_title);
+      //  String[] data = getResources().getStringArray(R.array.test_title);
+        CardSourse data = new CardSourceImpl(getResources()).init();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());  // отвечает за размещение элементов в RecyclerViewБ будут вертикально вниз
         recyclerView.setLayoutManager(layoutManager);
